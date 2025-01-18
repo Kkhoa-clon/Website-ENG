@@ -70,10 +70,10 @@
                 <ul>
                     <li><a href="index.html">Trang chủ</a></li>
                     <li><a href="taixuong.html">Tải Xuống</a></li>
-                    <li><a href="dich.html">translation</a></li>
-                    <li><a href="text.html">read text</a></li>
-                    <li><a href="game.html">mini game</a></li>
-                    <li><a href="doc.html">document</a></li>
+                    <li><a href="dich.html">Translation</a></li>
+                    <li><a href="text.html">Read Text</a></li>
+                    <li><a href="game.html">Mini Game</a></li>
+                    <li><a href="doc.html">Document</a></li>
                     <li><a href="https://github.com/Kkhoa-clon">Liên hệ</a></li>
                 </ul>
             </nav>
@@ -119,7 +119,7 @@
                 </select>
                 <button onclick="autoTranslate()">Dịch</button>
                 <button onclick="playText()">Nghe văn bản</button>
-                <button onclick="downloadAudio()">Tải về file MP4</button>
+                <button onclick="downloadAudio()">Tải về file MP3</button>
                 <button onclick="downloadOriginal()">Tải về văn bản gốc</button>
                 <button onclick="downloadTranslated()">Tải về văn bản dịch</button>
                 <div class="output" id="outputText">
@@ -127,7 +127,6 @@
                 </div>
             </div>
         </div>
-    </main>v>
     </main>
     <footer>
         <p>&copy; KhoaNguyen</p>
@@ -147,8 +146,6 @@
             try {
                 const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURIComponent(inputText)}`);
                 const data = await response.json();
-
-                // Extracting translated text
                 outputText.textContent = data[0].map(item => item[0]).join('');
             } catch (error) {
                 outputText.textContent = 'Có lỗi xảy ra khi dịch văn bản. Vui lòng thử lại.';
@@ -178,12 +175,12 @@
                 a.download = 'audio.mp3';
                 a.click();
 
-                // Clean up the URL object after download
                 URL.revokeObjectURL(url);
             } catch (error) {
                 alert('Có lỗi xảy ra khi tải về audio. Vui lòng thử lại.');
             }
         }
+
         function downloadOriginal() {
             const inputText = document.getElementById('inputText').value;
             if (!inputText.trim()) {
