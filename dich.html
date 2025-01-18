@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Học Sinh Học</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://i.pinimg.com/236x/c1/ea/8b/c1ea8bad297239b0fd1a16f651ae58e3.jpg" type="image/x-jpg">
+    <style>
+        main {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .translator {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .translator textarea {
+            width: 100%;
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #2f855a;
+            border-radius: 5px;
+        }
+
+        .translator select {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #2f855a;
+            border-radius: 5px;
+            margin: 5px;
+            background-color: #2f855a;
+            color: white;
+        }
+
+        .translator button {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #2f855a;
+            border-radius: 5px;
+            margin: 5px;
+            background-color: #2f855a;
+            color: white;
+        }
+
+        .translator button:hover {
+            background-color: #276749;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #2f855a;
+            border-radius: 5px;
+            background-color: #f0fff4;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1 class="title">EduCompanion</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="taixuong.html">Tải Xuống</a></li>
+                    <li><a href="dich.html">translation</a></li>
+                    <li><a href="text.html">read text</a></li>
+                    <li><a href="game.html">mini game</a></li>
+                    <li><a href="doc.html">document</a></li>
+                    <li><a href="https://github.com/Kkhoa-clon">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="translator">
+                <h2>Biên dịch ngôn ngữ</h2>
+                <textarea id="inputText" placeholder="Nhập văn bản tại đây..." oninput="autoTranslate()"></textarea>
+                <br>
+                <select id="sourceLanguage">
+                    <option value="auto">Tự động nhận diện</option>
+                    <option value="en">Tiếng Anh</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="fr">Tiếng Pháp</option>
+                    <option value="es">Tiếng Tây Ban Nha</option>
+                    <option value="de">Tiếng Đức</option>
+                    <option value="zh">Tiếng Trung</option>
+                    <option value="ja">Tiếng Nhật</option>
+                    <option value="ko">Tiếng Hàn</option>
+                    <option value="ru">Tiếng Nga</option>
+                    <option value="it">Tiếng Ý</option>
+                    <option value="pt">Tiếng Bồ Đào Nha</option>
+                    <option value="ar">Tiếng Ả Rập</option>
+                    <option value="hi">Tiếng Hindi</option>
+                </select>
+                <select id="targetLanguage">
+                    <option value="en">Tiếng Anh</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="fr">Tiếng Pháp</option>
+                    <option value="es">Tiếng Tây Ban Nha</option>
+                    <option value="de">Tiếng Đức</option>
+                    <option value="zh">Tiếng Trung</option>
+                    <option value="ja">Tiếng Nhật</option>
+                    <option value="ko">Tiếng Hàn</option>
+                    <option value="ru">Tiếng Nga</option>
+                    <option value="it">Tiếng Ý</option>
+                    <option value="pt">Tiếng Bồ Đào Nha</option>
+                    <option value="ar">Tiếng Ả Rập</option>
+                    <option value="hi">Tiếng Hindi</option>
+                </select>
+                <button onclick="autoTranslate()">Dịch</button>
+
+                <div class="output" id="outputText">
+                    Kết quả dịch sẽ hiển thị tại đây.
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; KhoaNguyen</p>
+    </footer>
+    <script>
+        async function autoTranslate() {
+            const inputText = document.getElementById('inputText').value;
+            const sourceLanguage = document.getElementById('sourceLanguage').value;
+            const targetLanguage = document.getElementById('targetLanguage').value;
+            const outputText = document.getElementById('outputText');
+
+            if (!inputText.trim()) {
+                outputText.textContent = 'Vui lòng nhập văn bản.';
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURIComponent(inputText)}`);
+                const data = await response.json();
+
+                // Extracting translated text
+                outputText.textContent = data[0].map(item => item[0]).join('');
+            } catch (error) {
+                outputText.textContent = 'Có lỗi xảy ra khi dịch văn bản. Vui lòng thử lại.';
+            }
+        }
+    </script>
+</body>
+</html>
